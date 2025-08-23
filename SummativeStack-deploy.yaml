@@ -1,3 +1,10 @@
-template-file-path: AWSTemplateFormatVersion1.yaml
-parameters: {}
-tags: {}
+version: 1.0
+resources:
+  SummativeStack:                     # logical name for the stack
+    template_file_path: AWSTemplateFormatVersion1.yaml
+    stack_name: SummativeStack        # actual CloudFormation stack name
+    region: eu-north-1                 # region where to deploy
+    capabilities:
+      - CAPABILITY_NAMED_IAM          # required if your template creates IAM roles
+    parameters: {}                    # put template parameters here if you have any
+    tags: {}                          # optional tags
