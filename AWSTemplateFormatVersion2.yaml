@@ -56,7 +56,7 @@ Resources:
         systemctl enable httpd
         #html
           cat <<EOF > /var/www/html/index.html
-            <html><body><h1>Yep, that works</h1></body></html>
+            <html><body><h1>Yep, that has changed</h1></body></html>
           EOF
 
                 
@@ -68,3 +68,4 @@ Outputs:
         - !GetAtt WebServer.PublicDnsName
     Description: Website URL
 # http://antl-bucket3.s3-website-us-east-1.amazonaws.com/
+
