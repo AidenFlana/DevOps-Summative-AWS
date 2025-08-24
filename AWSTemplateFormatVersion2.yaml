@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: CloudFormation Template for WebServer with Security Group, EC2 Instance, and CodeDeploy support
+Description: CloudFormation Template for WebServer with Security Group and EC2 Instance
 
 Parameters:
   LatestAmiId:
@@ -17,7 +17,7 @@ Parameters:
     ConstraintDescription: must be a valid EC2 instance type.
     
   MyIP:
-    Description: Your IP address in CIDR format (e.g. 203.0.113.1/32)
+    Description: Your IP address in CIDR format (e.g. 203.0.113.1/32).
     Type: String
     MinLength: '9'
     MaxLength: '18'
@@ -50,27 +50,25 @@ Resources:
         - !Ref WebServerSecurityGroup
       UserData: !Base64 |
         #!/bin/bash
-        # Update system and install Apache
         yum update -y
-        yum install -y ruby wget httpd
+        yum install -y httpd
         systemctl start httpd
         systemctl enable httpd
+        #html
+          cat <<EOF > /var/www/html/index.html
+            <html><body><h1>Yep, that works</h1></body></html>
+          EOF
 
-        # Install CodeDeploy agent
-        cd /home/ec2-user
-        wget https://aws-codedeploy-eu-north-1.s3.eu-north-1.amazonaws.com/latest/install
-        chmod +x ./install
-        ./install auto
-        systemctl start codedeploy-agent
-        systemctl enable codedeploy-agent
-
+                
 Outputs:
   WebsiteURL:
     Value: !Join
       - ''
       - - http://
         - !GetAtt WebServer.PublicDnsName
-    Description: Public URL of the web server
+    Description: Website URL
+# http://antl-bucket3.s3-website-us-east-1.amazonaws.com/
+
 
 
 
