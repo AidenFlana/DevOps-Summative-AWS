@@ -1,0 +1,10 @@
+version: 0.0
+os: linux
+files:
+  - source: index.html          # your HTML file in the repo
+    destination: /var/www/html # destination on EC2
+hooks:
+  AfterInstall:
+    - location: scripts/restart_httpd.sh
+      timeout: 300
+      runas: root
